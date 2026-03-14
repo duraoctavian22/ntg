@@ -22,6 +22,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 html,
 body {
   margin: 0;
@@ -32,10 +36,12 @@ body {
     radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.35) 0, transparent 55%),
     var(--bg);
   color: var(--text);
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 a {
@@ -51,7 +57,15 @@ img {
 .container {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding-left: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
 }
 
 .site-header {
@@ -59,8 +73,11 @@ img {
   top: 0;
   z-index: 50;
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.84));
   border-bottom: 1px solid rgba(255, 0, 0, 0.5);
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
 }
 
 .header-inner {
@@ -85,6 +102,16 @@ img {
   border-radius: 12px;
   overflow: hidden;
   background: transparent;
+}
+
+@media (max-width: 480px) {
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+  }
+  .logo-text {
+    font-size: 0.75rem;
+  }
 }
 
 .logo-mark img {
@@ -139,14 +166,19 @@ img {
 .nav-toggle {
   display: none;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   background: transparent;
   border: none;
   cursor: pointer;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-toggle span {
-  width: 20px;
+  width: 22px;
   height: 2px;
   border-radius: 999px;
   background: var(--detail);
@@ -165,6 +197,19 @@ img {
   background-repeat: no-repeat;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    padding: 1.5rem 0 2rem;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 1rem 0 1.5rem;
+  }
+}
+
 .hero-inner {
   display: flex;
   flex-direction: column;
@@ -175,17 +220,49 @@ img {
 .hero .container {
   padding-left: 18%;
   padding-top: 8vh;
+  padding-right: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .hero .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 4vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 2vh;
+  }
 }
 
 .hero h1 {
-  font-size: clamp(3.2rem, 6vw, 4.4rem);
+  font-size: clamp(2.25rem, 6vw, 4.4rem);
   margin: 0 0 1rem;
+  line-height: 1.15;
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: clamp(1.85rem, 8vw, 2.5rem);
+  }
 }
 
 .hero-subtitle {
   margin: 0 0 1.7rem;
   color: var(--text-muted);
   max-width: 36rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+@media (max-width: 480px) {
+  .hero-subtitle {
+    margin: 0 0 1.25rem;
+    font-size: 0.9rem;
+  }
 }
 
 .hero-content {
@@ -197,10 +274,28 @@ img {
   box-shadow: 0 18px 45px rgba(139, 0, 0, 0.35);
 }
 
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 1.2rem 1rem;
+    border-radius: 1rem;
+  }
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .btn {
@@ -209,6 +304,7 @@ img {
   justify-content: center;
   border-radius: var(--radius-full);
   padding: 0.6rem 1.35rem;
+  min-height: 44px;
   font-size: 0.9rem;
   border: 1px solid transparent;
   cursor: pointer;
@@ -242,6 +338,22 @@ img {
   border: 1px solid rgba(255, 0, 0, 0.5);
   box-shadow: var(--shadow-soft);
   transform: translate(160px, 118px);
+}
+
+@media (max-width: 768px) {
+  .hero-card {
+    transform: none;
+    min-width: 0;
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-card {
+    max-width: none;
+    padding: 1.2rem 1rem;
+  }
 }
 
 .hero-tag {
@@ -279,6 +391,18 @@ img {
   padding: 3rem 0;
 }
 
+@media (max-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1.5rem 0;
+  }
+}
+
 .section-alt {
   background: radial-gradient(circle at top right, rgba(139, 0, 0, 0.35), rgba(0, 0, 0, 1));
 }
@@ -304,6 +428,15 @@ img {
 .section-header h2 {
   margin: 0 0 0.4rem;
   font-size: 1.6rem;
+}
+
+@media (max-width: 480px) {
+  .section-header {
+    margin-bottom: 1.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.35rem;
+  }
 }
 
 .section-header p {
@@ -382,6 +515,19 @@ img {
   border: 1px solid rgba(255, 255, 179, 0.3);
 }
 
+@media (max-width: 480px) {
+  .match-item {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  .match-game {
+    font-size: 0.8rem;
+  }
+  .match-vs {
+    font-size: 0.9rem;
+  }
+}
+
 .match-game {
   margin: 0 0 0.1rem;
   font-size: 0.85rem;
@@ -422,6 +568,15 @@ img {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  .info-panels {
+    grid-template-columns: 1fr;
+  }
+  .about-grid {
+    gap: 1.5rem;
+  }
 }
 
 .info-panel {
@@ -471,6 +626,15 @@ img {
   box-shadow: var(--shadow-soft);
 }
 
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 1.2rem 1rem;
+  }
+  .contact-form .btn.primary {
+    width: 100%;
+  }
+}
+
 .form-field {
   margin-bottom: 0.9rem;
 }
@@ -485,14 +649,20 @@ img {
 .form-field input,
 .form-field textarea {
   width: 100%;
+  min-height: 44px;
   border-radius: 0.8rem;
   border: 1px solid rgba(255, 255, 179, 0.4);
   background: rgba(0, 0, 0, 0.8);
-  padding: 0.5rem 0.7rem;
+  padding: 0.6rem 0.85rem;
   color: var(--detail);
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 16px;
   outline: none;
+}
+
+.form-field textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 .form-field input::placeholder,
@@ -509,7 +679,7 @@ img {
 .site-footer {
   border-top: 1px solid rgba(255, 255, 179, 0.25);
   background: #000000;
-  padding: 1.1rem 0 1.4rem;
+  padding: 1.1rem 0 calc(1.4rem + env(safe-area-inset-bottom, 0));
   margin-top: 1rem;
 }
 
@@ -518,9 +688,20 @@ img {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.6rem;
+  gap: 0.75rem;
   font-size: 0.85rem;
   color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 .footer-links {
@@ -575,6 +756,23 @@ img {
   gap: 1.5rem;
 }
 
+@media (max-width: 480px) {
+  .follow-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  .follow-inner h2 {
+    font-size: 1.25rem;
+  }
+  .social-links a {
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
 .eyebrow {
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -614,12 +812,9 @@ img {
 }
 
 @media (max-width: 900px) {
-  .hero-inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   .hero-visual {
     justify-content: flex-start;
+    width: 100%;
   }
 
   .cards-grid {
@@ -635,16 +830,20 @@ img {
 @media (max-width: 720px) {
   .main-nav {
     position: absolute;
-    inset: 56px 1.5rem auto;
+    top: 100%;
+    left: 1rem;
+    right: 1rem;
+    margin-top: 0.25rem;
     border-radius: 1rem;
     background: rgba(0, 0, 0, 0.98);
     border: 1px solid rgba(255, 255, 179, 0.3);
-    padding: 0.6rem 0.8rem;
+    padding: 0.75rem 1rem;
     transform-origin: top;
-    transform: scaleY(0.8);
+    transform: scaleY(0.95);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.16s ease, transform 0.16s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
   .main-nav.open {
@@ -655,7 +854,14 @@ img {
 
   .main-nav ul {
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0;
+  }
+  .main-nav a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    min-height: 44px;
   }
 
   .nav-toggle {
